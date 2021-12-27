@@ -1,13 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar'
+import React, { useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import * as Font from 'expo-font'
+import AppLoading from 'expo-app-loading'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
+import MealsNavigator from './navigation/MealsNavigator'
+import MealsFavTabNavigator from './navigation/TabNavigator'
+import NavigationWrapper from './navigation/NavigationWrapper'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  const [fontLoaded, setFontLoaded] = useState(false)
+
+  const loadFontAsync = () => {
+    return Font.loadAsync({
+      'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+      'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+    })
+  }
+
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={loadFontAsync}
+        onFinish={() => setFontLoaded(true)}
+        onError={() => console.log('error')}
+      />
+    )
+  }
+
+  return <NavigationWrapper />
 }
 
 const styles = StyleSheet.create({
@@ -17,4 +39,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
