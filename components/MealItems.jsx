@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   View,
   Text,
@@ -6,15 +6,16 @@ import {
   ImageBackground,
   Alert,
   TouchableOpacity,
-} from 'react-native'
+} from "react-native"
 
 const MealItems = (props) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onSelectMeal}>
-      <ImageBackground
-        source={{ uri: props.imageUrl }}
-        style={styles.imageStyles}
-      >
+    <TouchableOpacity
+      style={styles.container}
+      onPress={props.onSelectMeal}
+      activeOpacity={0.8}
+    >
+      <ImageBackground source={{ uri: props.image }} style={styles.imageStyles}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{props.title}</Text>
         </View>
@@ -35,21 +36,21 @@ const styles = StyleSheet.create({
   imageStyles: {
     flex: 1,
     height: 200,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   titleContainer: {
-    backgroundColor: 'rgba(0, 0, 0,0.6)',
+    backgroundColor: "rgba(0, 0, 0,0.6)",
     paddingHorizontal: 20,
   },
   title: {
-    color: '#fff',
+    color: "#fff",
     padding: 10,
     fontSize: 18,
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
   },
   details: {
     padding: 20,
-    height: 200,
+    // height: 200,
   },
 })
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from "react"
 import {
   View,
   Text,
@@ -6,10 +6,28 @@ import {
   Switch,
   Platform,
   ImageBackground,
-} from 'react-native'
+} from "react-native"
+import { useDispatch, useSelector } from "react-redux"
+import { toggleFavorite } from "../store/actions/mealsAction"
 
-const RecipeScreen = ({ route }) => {
+const RecipeScreen = ({ navigation, route }) => {
   const meal = route.params.meal
+  const mealId = meal.id
+
+  const dispatch = useDispatch()
+
+  const isFav = useSelector((state) =>
+    state.meals.favoriteMeals.some((meal) => meal.id === mealId)
+  )
+
+  const toggleFavoriteHandler = useCallback(() => {
+    dispatch(toggleFavorite(mealId))
+  }, [dispatch, mealId])
+
+  useEffect(() => {
+    navigation.setParams({ toggleFav: toggleFavoriteHandler })
+    navigation.setParams({ isFav })
+  }, [toggleFavoriteHandler, isFav])
 
   return (
     <View style={styles.container}>
@@ -37,17 +55,17 @@ const styles = StyleSheet.create({
   imageStyles: {
     flex: 1,
     height: 200,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   titleContainer: {
-    backgroundColor: 'rgba(0, 0, 0,0.6)',
+    backgroundColor: "rgba(0, 0, 0,0.6)",
     paddingHorizontal: 20,
   },
   title: {
-    color: '#fff',
+    color: "#fff",
     padding: 10,
     fontSize: 18,
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
   },
   details: {
     padding: 20,
